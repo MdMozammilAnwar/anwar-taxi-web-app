@@ -23,7 +23,6 @@ export const DriverRoutes: Routes  = [
   imports: [
     CommonModule,
     FormsModule,
-    BrowserModule,
     RouterModule.forChild(DriverRoutes),
   ]
 })

@@ -75,6 +75,7 @@ export class HomeComponent implements OnInit{
           if(res){
             if(res.success){
               // clean the variable once ride created
+              this.GetAllRide();
               this.createRideFromDes="";
               this.createRideToDes="";
               this.createRideDate="";
