@@ -1,0 +1,28 @@
+.card {
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-header h2 {
+    margin-bottom: 0;
+  }
+  
+  .card-body {
+    padding: 0; /* Optional, to reduce internal padding */
+  }
+  
+  .btn {
+    margin-top: 10px;
+  }
+  .centered-image {
+    height: 100%; /* Set the height to 100% of the parent div */
+    width: 100%; /* Set the width to 100% of the parent div */
+    object-fit: cover; /* Maintain the aspect ratio and cover the entire div */
+    margin: 0 auto; /* Center horizontally */
+    display: block; /* Remove any residual inline alignment */
+    padding: 20px; /* Add padding as desired */
+  }
+  
+  
+  

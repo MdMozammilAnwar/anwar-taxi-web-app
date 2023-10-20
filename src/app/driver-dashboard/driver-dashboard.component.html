@@ -1,0 +1,179 @@
+<!-- Header -->
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-taxi"></i> Taxi App (For Rider)
+      </a>
+      <div class="profile-dropdown">
+        <img src="../../../assets/img/profile_pic.jpg" alt="Profile Image" class="profile-image"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="dropdown-menu" aria-labelledby="profileDropdown">
+          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container mt-3">
+    <div class="row">
+      
+      <!-- Main Content -->
+      <div class="col-md-12">
+        <div class="row">
+          
+          <!-- Confirmed Rides Section -->
+          <div class="col-md-9">
+            <!-- Display small cards with static data here -->
+            <div class="card card-height" style="overflow-y: auto;">
+                <div class="card-body">
+                  <h5 class="card-title">Search Ride</h5>
+                  <div >
+                    <div class="card" style="width: 100%; height: 25%;">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-5">
+                                  <input type="text" class="form-control" placeholder="Search Ride..."  [(ngModel)]="searchDest">
+                                </div>
+                                <div class="col-md-4">
+                                  <button class="btn btn-primary" (click)="searchRide()">
+                                    <i class="fa fa-search mr-3"></i> Search <!-- Assuming you're using Font Awesome for the search icon -->
+                                  </button>
+                                </div>
+                                <small *ngIf="rideFoundList.length>0">Click the card below to accept ride</small>
+                                <div class="col-md-6">
+                                    <div *ngFor="let ride of rideFoundList">
+                                        <div class="card mt-3" style="cursor: pointer;">
+                                            <div class="card-body">
+                                                <div class="row" (click)="passRideDataToAccept(ride)">
+                                                  <div class="col">
+                                                    <p class="card-text"><strong>From:</strong> {{ride.fromDestination}}</p>
+                                                    <p class="card-text"><strong>To:</strong> {{ride.toDestination}}</p>
+                                                  </div>
+                                                  <div class="col">
+                                                    <p class="card-text"><strong>Date:</strong> {{ride.rideTimeByUser | date}}</p>
+                                                    <p class="card-text"><strong>Driver:</strong> {{ride.userName}}</p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="card col-md-5 mt-3" *ngIf="rideClicked">
+                                    <div style="cursor: pointer;">
+                                        <div class="row mt-3">
+                                            <div class="col">
+                                              <p class="card-text"><strong>From:</strong>{{rideToAccept.fromDestination}}</p>
+                                              <p class="card-text"><strong>To:</strong> {{rideToAccept.toDestination}}</p>
+                                            </div>
+                                            <div class="col">
+                                              <p class="card-text"><strong>Date:</strong> {{rideToAccept.rideTimeByUser | date}}</p>
+                                              <p class="card-text"><strong>Customer:</strong> {{rideToAccept.userName}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label for="from"><strong>Pick Up Time</strong></label>
+                                            <input type="date" class="form-control" id="from" [(ngModel)]="rideTimeByDriver">
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label for="from"><strong>Fare</strong></label>
+                                            <input type="text" class="form-control" id="from" [(ngModel)]="fareByDriver">
+                                        </div>
+                                        <button class="btn btn-primary mt-3" (click)="acceptRide(rideToAccept.userId,rideToAccept.rideId)">Accept</button>
+                                    </div>
+                                </div>
+                              </div>
+                              
+                        </div>
+                          
+                      </div>
+                  </div>
+                  <div *ngIf="!riderArray" >
+                    <img src="../../../assets/img/no_data.png" alt="" style="width: 70%;">
+                    <p class="text-center mt-3">No Ride Accepted Yet</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <!-- Upcoming Rides Section -->
+          <div class="col-md-3">
+            <!-- Display small cards with static data here -->
+            <div class="card card-height" style="overflow-y: auto;">
+                <div class="card-body">
+                  <h5 class="card-title">Upcoming Ride</h5>
+                  <div *ngFor="let ride of allConfimedRide">
+                    <div class="card" style="width: 100%; height: 25%;">
+                        <!-- <div class="card-body">
+                          <p class="card-text">From: {{ride.fromDestination}}</p>
+                          <p class="card-text">To: {{ride.toDestination}}</p>
+                          <p class="card-text">Date: {{ride.rideTimeByUser | date}}</p>
+                        </div> -->
+                        <div class="card-body">
+                            <div class="row mb-3">
+                              <div class="col">
+                                <p class="card-text"><strong>From:</strong> {{ride.fromDestination}}</p>
+                              </div>
+                              <div class="col">
+                                <p class="card-text"><strong>To:</strong> {{ride.toDestination}}</p>
+                              </div>
+                            </div>
+                          
+                            <div class="row">
+                              <div class="col">
+                                <p class="card-text"><strong>Date:</strong> {{ride.rideTimeByDriver | date}}</p>
+                                <p class="card-text"><strong>Driver:</strong> {{ride.userName}}</p>
+
+                              </div>
+                            </div>
+                          </div>
+                          
+                      </div>
+                  </div>
+                  <div *ngIf="!allConfimedRide" >
+                    <img src="../../../assets/img/no_data.png" alt="" style="width: 80%;">
+                    <p class="text-center mt-3">No Upcoming Ride</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="row mt-3" *ngIf="riderArray">
+          <!-- Second Row -->
+          <div class="col-md-12">
+            <!-- Table with static data -->
+            <!-- You can use a table to display your data here -->
+            <table class="table table-hover custom-table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">From</th>
+                    <th scope="col">To</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ride of allRide; let i=index">
+                    
+                    <td>{{i+1}}</td>
+                    <td>{{ride.driverName}}</td>
+                    <td>{{ride.driverEmail}}</td>
+                    <td>{{ride.driverMobile}}</td>
+                    <td>{{ride.fromDestination}}</td>
+                    <td>{{ride.toDestination}}</td>
+                    <td>{{ride.rideTimeByUser | date}}</td>
+                    <td>{{ride.status}}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
