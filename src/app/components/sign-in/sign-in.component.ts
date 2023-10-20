@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -10,13 +10,16 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class SignInComponent {
   user = { email: '', password: '' };
+  inValidCredential:boolean=false;
   constructor(
     private http:HttpClient,
     private authService:AuthenticationService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
     ){
-      this.getWelcome();
+     
   }
+  
   getWelcome(){
     this.authService.GetWelcome().subscribe((data)=>{
       console.log("Data from server : "+JSON.stringify(data));
@@ -28,9 +31,11 @@ export class SignInComponent {
   onSubmit() {
     // Do something with the data, like sending it to a server or performing validation
     console.log("user login data: "+JSON.stringify(this.user));
+    this.showSpinner();
     this.authService.UserLogin(this.user).subscribe(
         (res:any)=>{
           if(res){
+            this.hideSpinner();
             console.log("login User Data : "+JSON.stringify(res));
             // store the data and redirect the /home
             let role=res.user.role;
@@ -53,9 +58,21 @@ export class SignInComponent {
           }
         },
         (err:HttpErrorResponse)=>{
+            this.inValidCredential=true;
             console.log("Error : "+err.message);
         }
         )
     
+  }
+  showSpinner(){
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1500);
+  }
+  hideSpinner(){
+    this.spinner.hide();
   }
 }

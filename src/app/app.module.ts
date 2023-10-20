@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutes } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgxSpinnerModule,
     RouterModule.forRoot(AppRoutes)
   ],
   providers: [],

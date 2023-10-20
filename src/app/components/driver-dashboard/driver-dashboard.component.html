@@ -1,3 +1,4 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 <!-- Header -->
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
@@ -89,10 +90,11 @@
                           
                       </div>
                   </div>
-                  <div *ngIf="!riderArray" >
-                    <img src="../../../assets/img/no_data.png" alt="" style="width: 70%;">
-                    <p class="text-center mt-3">No Ride Accepted Yet</p>
+                  <div *ngIf="!isRideFound && rideFoundList.length == 0" class="d-flex flex-column align-items-center">
+                    <img src="../../../assets/img/no_data.png" alt="" style="width: 20%;">
+                    <p class="text-center mt-3">No Ride Found</p>
                   </div>
+                  
                 </div>
               </div>
           </div>
@@ -138,7 +140,7 @@
               </div>
           </div>
         </div>
-        <div class="row mt-3" *ngIf="riderArray">
+        <div class="row mt-3" *ngIf="allRide">
           <!-- Second Row -->
           <div class="col-md-12">
             <!-- Table with static data -->
@@ -147,9 +149,9 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Mobile</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Customer Email</th>
+                    <th scope="col">Customer Mobile</th>
                     <th scope="col">From</th>
                     <th scope="col">To</th>
                     <th scope="col">Time</th>

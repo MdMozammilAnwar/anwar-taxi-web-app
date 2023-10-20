@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RideFound } from '../../models/IRideFound';
 import swal from "sweetalert2";
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-driver-dashboard',
@@ -11,7 +12,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./driver-dashboard.component.css']
 })
 export class DriverDashboardComponent implements OnInit{
-  riderArray2=null;
   paymentMode:string="";
   rideFound:string="";
   searchDest:string=""
@@ -25,7 +25,12 @@ export class DriverDashboardComponent implements OnInit{
   allRide:any=[];
   driver:any;
   allConfimedRide:any;
-  constructor(private rideService:RideServiceService,private router: Router){
+  isRideFound:boolean=true;
+  constructor(
+      private rideService:RideServiceService,
+      private router: Router,
+      private spinner:NgxSpinnerService
+      ){
     this.paymentMode="Cash"
     const navigation = this.router.getCurrentNavigation();
     if(navigation){
@@ -49,8 +54,11 @@ export class DriverDashboardComponent implements OnInit{
     let objToSearchRide={
       fromDestination:this.searchDest
     }
+    this.showSpinner();
     this.rideService.SearchRide(objToSearchRide).subscribe(
       (res:any)=>{
+        console.log("res search : "+JSON.stringify(res));
+        this.hideSpinner();
         if(res.success){
           this.rideFoundList=res.rideDetails;
           console.log("found ride from DB : "+JSON.stringify(this.rideFoundList));
@@ -58,6 +66,7 @@ export class DriverDashboardComponent implements OnInit{
       },
       (err:HttpErrorResponse)=>{
         console.log("Error while searching ride : "+err.message);
+        this.isRideFound=false;
       })
   }
   passRideDataToAccept(ride:RideFound){
@@ -73,9 +82,11 @@ export class DriverDashboardComponent implements OnInit{
       rideTimeByDriver:this.rideTimeByDriver,
       rideFare:this.fareByDriver
     }
+    this.showSpinner();
     this.rideService.AcceptRide(objToAcceptRide).subscribe(
       (res:any)=>{
         if(res){
+          this.hideSpinner();
           if(res.success){
             swal.fire(
               'Ride Accepted!',
@@ -110,6 +121,7 @@ export class DriverDashboardComponent implements OnInit{
       }
     )
   }
+
   getUpcomingRide(){
     let objToGetUpcomingRide={
       userId:this.driver.userId
@@ -135,6 +147,7 @@ export class DriverDashboardComponent implements OnInit{
     }
     this.rideService.GetAllRides(objToGetUpcomingRide).subscribe(
       (res:any)=>{
+        console.log("Get All ride from server : "+JSON.stringify(res));
         if(res){
           // update the ucoming ride array
           if(res.success){
@@ -147,46 +160,16 @@ export class DriverDashboardComponent implements OnInit{
       }
     )
   }
-  riderArray= [
-    {
-        "rideId": 2,
-        "userId": 1,
-        "userName": "John Doe",
-        "userEmail": "john.doe@example.com",
-        "userMobile": "555-123-4567",
-        "fromDestination": "Hyderabad",
-        "toDestination": "Chennai",
-        "rideTimeByUser": "2023-10-28 07:00:00",
-        "status": 2,
-        "createdBy": 1,
-        "createdOn": "2023-10-18 15:39:32.054527"
-    },
-    {
-        "rideId": 3,
-        "userId": 3,
-        "userName": "Sonal Shah",
-        "userEmail": "sonal@example.com",
-        "userMobile": "555-123-4567",
-        "fromDestination": "Hyderabad",
-        "toDestination": "Chennai",
-        "rideTimeByUser": "2023-12-28 07:00:00",
-        "status": 2,
-        "createdBy": 3,
-        "createdOn": "2023-10-18 15:45:33.979275"
-    },
-    {
-        "rideId": 5,
-        "userId": 1,
-        "userName": "John Doe",
-        "userEmail": "john.doe@example.com",
-        "userMobile": "555-123-4567",
-        "fromDestination": "Hyderabad",
-        "toDestination": "Mumbai",
-        "rideTimeByUser": "2023-12-08 07:00:00",
-        "status": 2,
-        "createdBy": 1,
-        "createdOn": "2023-10-19 06:48:26.257907"
-    }
-];
-}
+  showSpinner(){
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1500);
+  }
+  hideSpinner(){
+    this.spinner.hide();
+  }
+ }
 

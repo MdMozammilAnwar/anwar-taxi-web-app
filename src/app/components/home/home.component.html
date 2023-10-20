@@ -1,3 +1,4 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 <!-- Header -->
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
@@ -40,7 +41,7 @@
                     <label for="date"><strong>Date</strong></label>
                     <input type="date" class="form-control" id="date" [(ngModel)]="createRideDate">
                   </div>
-                  <button class="btn btn-primary mt-3" (click)="createRide()">Submit</button>
+                  <button class="btn btn-primary mt-3" (click)="createRide()">Create</button>
                 </div>
               </div>
             </div>
@@ -122,7 +123,7 @@
               </div>
           </div>
         </div>
-        <div class="row mt-3" *ngIf="riderArray">
+        <div class="row mt-3" *ngIf="allRide">
           <!-- Second Row -->
           <div class="col-md-12">
             <!-- Table with static data -->
@@ -131,9 +132,9 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Mobile</th>
+                    <th scope="col">Driver Name</th>
+                    <th scope="col">Driver Email</th>
+                    <th scope="col">Driver Mobile</th>
                     <th scope="col">From</th>
                     <th scope="col">To</th>
                     <th scope="col">Time</th>

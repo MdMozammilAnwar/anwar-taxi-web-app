@@ -4,14 +4,13 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
 import { RideServiceService } from 'src/app/services/ride-service.service';
 import swal from "sweetalert2";
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
-  riderArray2=null;
   paymentMode:string="";
   upcomingRide:any=[];
   createRideFromDes:string="";
@@ -22,7 +21,11 @@ export class HomeComponent implements OnInit{
   allConfimedRide:any;
   allRide:any=[];
 
-  constructor(private rideService: RideServiceService,private router: Router){
+  constructor(
+    private rideService: RideServiceService,
+    private router: Router,
+    private spinner: NgxSpinnerService
+    ){
     this.paymentMode="Cash";
     
     const navigation = this.router.getCurrentNavigation();
@@ -69,10 +72,12 @@ export class HomeComponent implements OnInit{
         toDestination:this.createRideToDes,
         rideTime:this.createRideDate
       }
+      this.showSpinner();
       this.rideService.CreateRide(objToCreateRide).subscribe(
         (res:any)=>{
           console.log("server response createRide() :: "+JSON.stringify(res));
           if(res){
+            this.hideSpinner();
             if(res.success){
               // clean the variable once ride created
               this.GetAllRide();
@@ -98,8 +103,10 @@ export class HomeComponent implements OnInit{
       rideId:rideId,
       paymentMode:this.paymentMode
     }
+    this.showSpinner();
     this.rideService.RideConfirmByUser(objToBookNow).subscribe((res:any)=>{
       if(res){
+        this.hideSpinner();
         if(res.success){
           // lets clean the paymentMode
           this.getUpcomingRide();
@@ -152,47 +159,17 @@ export class HomeComponent implements OnInit{
       }
     )
   }
-  riderArray= [
-    {
-        "rideId": 2,
-        "userId": 1,
-        "userName": "John Doe",
-        "userEmail": "john.doe@example.com",
-        "userMobile": "555-123-4567",
-        "fromDestination": "Hyderabad",
-        "toDestination": "Chennai",
-        "rideTimeByUser": "2023-10-28 07:00:00",
-        "status": 2,
-        "createdBy": 1,
-        "createdOn": "2023-10-18 15:39:32.054527"
-    },
-    {
-        "rideId": 3,
-        "userId": 3,
-        "userName": "Sonal Shah",
-        "userEmail": "sonal@example.com",
-        "userMobile": "555-123-4567",
-        "fromDestination": "Hyderabad",
-        "toDestination": "Chennai",
-        "rideTimeByUser": "2023-12-28 07:00:00",
-        "status": 2,
-        "createdBy": 3,
-        "createdOn": "2023-10-18 15:45:33.979275"
-    },
-    {
-        "rideId": 5,
-        "userId": 1,
-        "userName": "John Doe",
-        "userEmail": "john.doe@example.com",
-        "userMobile": "555-123-4567",
-        "fromDestination": "Hyderabad",
-        "toDestination": "Mumbai",
-        "rideTimeByUser": "2023-12-08 07:00:00",
-        "status": 2,
-        "createdBy": 1,
-        "createdOn": "2023-10-19 06:48:26.257907"
-    }
-];
+  showSpinner(){
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1500);
+  }
+  hideSpinner(){
+    this.spinner.hide();
+  }
 }
 export class CreateRide{
   constructor(

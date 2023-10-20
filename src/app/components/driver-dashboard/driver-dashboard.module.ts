@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DriverDashboardComponent } from './driver-dashboard.component';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 export const DriverRoutes: Routes  = [
@@ -24,6 +24,7 @@ export const DriverRoutes: Routes  = [
     CommonModule,
     FormsModule,
     RouterModule.forChild(DriverRoutes),
+    NgxSpinnerModule
   ]
 })
 export class DriverDashboardModule { }

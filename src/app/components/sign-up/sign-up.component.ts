@@ -6,6 +6,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import swal from "sweetalert2";
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Component({
   selector: 'app-sign-up',
@@ -17,6 +19,7 @@ export class SignUpComponent {
   constructor(private http:HttpClient,
               private authService:AuthenticationService, 
               private router: Router,
+              private spinner: NgxSpinnerService
               ){
   }
   user: UserRegisteration = new User(); // Initialize the User model
