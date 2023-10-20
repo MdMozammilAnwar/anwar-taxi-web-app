@@ -35,7 +35,7 @@ export class SignInComponent {
             // store the data and redirect the /home
             let role=res.user.role;
             if(role=="User"){
-              this.router.navigate(['/dashboard'],{
+              this.router.navigate(['/user-dashboard'],{
                 state: {
                   user: res.user
                 },

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { UserRegisteration } from 'src/app/models/user-registeration';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { NgxSpinnerService } from "ngx-spinner";
+
 import swal from "sweetalert2";
 import { Router } from '@angular/router';
 
@@ -16,10 +16,8 @@ import { Router } from '@angular/router';
 export class SignUpComponent {
   constructor(private http:HttpClient,
               private authService:AuthenticationService, 
-              private spinner:NgxSpinnerService,
               private router: Router,
               ){
-   //this.showSpinner();
   }
   user: UserRegisteration = new User(); // Initialize the User model
 
@@ -46,19 +44,4 @@ export class SignUpComponent {
         console.log("Error Message : "+err.message)
       })
   }
-  showSpinner() {
-    console.log("Show Spinner called...");
-    this.spinner.show();
-    setTimeout(() => {
-      //   spinner ends after 15 seconds
-      this.hideSpinner();
-    }, 15000);
-  }
-
-  hideSpinner() {
-    console.log("Hide Spinner called...");
-    this.spinner.hide();
-  }
-  
-
 }

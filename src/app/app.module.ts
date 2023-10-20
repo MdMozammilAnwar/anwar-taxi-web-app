@@ -4,27 +4,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './components/home/home.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { AboutComponent } from './components/about/about.component';
+// import { HomeComponent } from './components/home/home.component';
+// import { SignInComponent } from './components/sign-in/sign-in.component';
+// import { SignUpComponent } from './components/sign-up/sign-up.component';
+// import { AboutComponent } from './components/about/about.component';
+// import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+// import { DriverDashboardComponent } from './components/driver-dashboard/driver-dashboard.component';
 import { RouterModule } from '@angular/router';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AppRoutes } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { DriverDashboardComponent } from './driver-dashboard/driver-dashboard.component';
-
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    SignInComponent,
-    SignUpComponent,
-    AboutComponent,
-    DriverDashboardComponent
+    AppComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -32,16 +27,7 @@ import { DriverDashboardComponent } from './driver-dashboard/driver-dashboard.co
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxSpinnerModule,
-    RouterModule.forRoot([
-      {path: 'dashboard', component:HomeComponent },
-      {path: 'driver-dashboard', component:DriverDashboardComponent },
-      {path: 'about', component: AboutComponent},
-      {path: 'signin', component: SignInComponent},
-      {path: 'signup', component: SignUpComponent},
-      {path: '', redirectTo: '/signin', pathMatch: 'full'},
-      {path: '**', component: PageNotFoundComponent}
-    ])
+    RouterModule.forRoot(AppRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

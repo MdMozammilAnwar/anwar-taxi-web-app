@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RideServiceService } from '../services/ride-service.service';
+import { RideServiceService } from '../../services/ride-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RideFound } from '../models/IRideFound';
+import { RideFound } from '../../models/IRideFound';
 import swal from "sweetalert2";
 import { Router } from '@angular/router';
 
