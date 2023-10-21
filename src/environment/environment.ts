@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
     baseUrl: "http://localhost:4200",
-    apiUrl: "http://localhost:4000/api/v1",
+    apiUrl: "https://anwar-taxi-server-2.vercel.app/api/v1",
 }
